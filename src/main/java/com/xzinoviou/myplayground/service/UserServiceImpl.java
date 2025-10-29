@@ -21,14 +21,14 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public List<UserDto> getAll() {
-        return userRepository.findAll().stream().map(userMapper::mapToDto).toList();
-    }
-
-    @Override
     public UserDto getById(long id) {
         var user = userRepository.findById(id).orElseThrow(() -> new PlaygroundAppException("Fail to find user with id: " + id));
         return userMapper.mapToDto(user);
+    }
+
+    @Override
+    public List<UserDto> getAll() {
+        return userRepository.findAll().stream().map(userMapper::mapToDto).toList();
     }
 
     @Override

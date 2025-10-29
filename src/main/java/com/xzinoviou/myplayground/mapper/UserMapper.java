@@ -22,17 +22,17 @@ public interface UserMapper {
     @Mapping(source = "firstName", target = "firstName")
     @Mapping(source = "lastName", target = "lastName")
     @Mapping(source = "role", target = "role")
-    @Mapping(source = "offsetDateTimeRegistration", target = "offsetDateTimeRegistration")
-    @Mapping(source = "localDateTimeRegistration", target = "localDateTimeRegistration")
+    @Mapping(source = "offsetDateTime", target = "offsetDateTime")
+    @Mapping(source = "localDateTime", target = "localDateTime")
     @Mapping(source = "timeZoneOffset", target = "timeZoneOffset")
     UserDto mapToDto(User user);
 
     @Mapping(source = "firstName", target = "firstName")
     @Mapping(source = "lastName", target = "lastName")
     @Mapping(source = "role", target = "role", qualifiedByName = "convertToUserRole")
-    @Mapping(source = "dateOfBirth", target = "offsetDateTimeRegistration", qualifiedByName = "getOffsetDateTime")
-    @Mapping(source = "dateOfBirth", target = "localDateTimeRegistration", qualifiedByName = "getLocalDateTime")
-    @Mapping(source = "dateOfBirth", target = "timeZoneOffset", qualifiedByName = "getTimeZoneOffset")
+    @Mapping(source = "offsetDateTime", target = "offsetDateTime", qualifiedByName = "getOffsetDateTime")
+    @Mapping(source = "offsetDateTime", target = "localDateTime", qualifiedByName = "getLocalDateTime")
+    @Mapping(source = "offsetDateTime", target = "timeZoneOffset", qualifiedByName = "getTimeZoneOffset")
     User mapToEntity(UserCreateInput input);
 
 
