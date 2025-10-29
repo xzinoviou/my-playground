@@ -34,3 +34,6 @@ build/
 
 ### SDK Man ###
 .sdkmanrc
+
+### env variables ###
+.env
