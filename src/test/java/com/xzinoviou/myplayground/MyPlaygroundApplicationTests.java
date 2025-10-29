@@ -8,6 +8,7 @@ class MyPlaygroundApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("MyPlaygroundApplicationTests.contextLoads");
     }
 
 }
