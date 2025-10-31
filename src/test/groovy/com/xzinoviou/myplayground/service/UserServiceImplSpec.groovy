@@ -28,7 +28,7 @@ class UserServiceImplSpec extends Specification {
     }
 
 
-    def "delete a user"() {
+    def "Delete successfully a user"() {
         given: "The user id"
         def id = 3
 
@@ -41,7 +41,7 @@ class UserServiceImplSpec extends Specification {
 
     def "Fail to create a user with invalid role"() {
         given: "An input for a new user with an invalid role"
-        def input = new UserCreateInput(firstName: "Mike", lastName: "Rogers", role: "invalid", offsetDateTime: OffsetDateTime.now().toString())
+        def input = new UserCreateInput(firstName: "Mike", lastName: "Rogers", role: "invalid", registrationDate: OffsetDateTime.now().toString())
 
         when: "The create operation is called"
         testClass.create(input)

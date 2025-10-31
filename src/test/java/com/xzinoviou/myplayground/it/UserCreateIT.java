@@ -1,37 +1,30 @@
 package com.xzinoviou.myplayground.it;
 
-import com.xzinoviou.myplayground.exception.PlaygroundAppException;
-import com.xzinoviou.myplayground.mapper.UserMapper;
-import com.xzinoviou.myplayground.model.enumeration.UserRole;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xzinoviou.myplayground.model.input.UserCreateInput;
 import com.xzinoviou.myplayground.repository.UserRepository;
-import com.xzinoviou.myplayground.service.UserService;
-import com.xzinoviou.myplayground.service.UserServiceImpl;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.MySQLContainer;
 
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 /**
  * @author : Xenofon Zinoviou
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(value = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class UserServiceIT {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceIT.class);
+@AutoConfigureMockMvc
+class UserCreateIT {
 
-    private static final String OFFSET_DATE_TIME = "2025-10-31T23:59:59.111222789+01:00";
+    private static final String OFFSET_DATE_TIME = "2025-10-31T23:59:59.111222789+03:00";
 
     static MySQLContainer<?> mysql;
 
@@ -39,9 +32,10 @@ class UserServiceIT {
     private UserRepository userRepository;
 
     @Autowired
-    private UserMapper userMapper;
+    private MockMvc mockMvc;
 
-    private UserService testClass;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
 
     @BeforeAll
     static void beforeAll() {
@@ -70,45 +64,33 @@ class UserServiceIT {
 
     @BeforeEach
     void setUp() {
-        testClass = new UserServiceImpl(userRepository, userMapper);
     }
 
     @AfterEach
     void tearDown() {
-        LOGGER.atInfo().log("[--- Clearing test db ---]");
         userRepository.deleteAll();
     }
 
     @Test
-    void getUserById() {
-        var offsetDateTime = OffsetDateTime.parse("2025-10-31T23:59:59.111223+01:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-        var result = testClass.getById(1);
+    void testShouldCreateUserAndReturnUserId() throws Exception {
+        final String payloadAsString = objectMapper.writeValueAsString(newUserCreateInput());
 
-        assertEquals(1L, result.getId());
-        assertEquals("Darth", result.getFirstName());
-        assertEquals("Vader", result.getLastName());
-        assertEquals(UserRole.ADMIN, result.getRole());
-        assertEquals(offsetDateTime.getOffset().toString(), result.getTimeZoneOffset());
-        assertEquals(offsetDateTime, result.getRegistrationDate());
+        mockMvc.perform(post("/users")
+                        .contentType("application/json")
+                        .content(payloadAsString))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value(6));
     }
 
     @Test
-    void create_whenUserCreatedSuccessfully_returnId() {
-        var input = newUserCreateInput();
+    void test_whenInvalidInput_shouldThrowException_andFailCreation() throws Exception {
+        var payload = newUserCreateInput();
+        payload.setRole("invalidROLE");
+        final String payloadAsString = objectMapper.writeValueAsString(payload);
 
-        var id = testClass.create(input);
-
-        assertEquals(6, id);
-    }
-
-    @Test
-    void create_whenInvalidRoleSupplied_thenThrowException(){
-        var input = newUserCreateInput();
-        input.setRole("wrong");
-
-        var ex = assertThrows(PlaygroundAppException.class, () -> testClass.create(input));
-
-        assertEquals("Failed to create user", ex.getMessage());
+        mockMvc.perform(post("/users").contentType("application/json").content(payloadAsString))
+                .andExpect(MockMvcResultMatchers.status().is5xxServerError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Failed to create user"));
     }
 
     private UserCreateInput newUserCreateInput() {

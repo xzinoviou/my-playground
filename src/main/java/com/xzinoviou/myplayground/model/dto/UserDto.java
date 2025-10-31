@@ -4,9 +4,7 @@ import com.xzinoviou.myplayground.model.enumeration.UserRole;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.List;
 
 /**
  * @author : Xenofon Zinoviou
@@ -18,7 +16,6 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private UserRole role;
-    private OffsetDateTime offsetDateTime;
-    private LocalDateTime localDateTime;
+    private OffsetDateTime registrationDate;
     private String timeZoneOffset;
 }

@@ -32,7 +32,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- utility versions -->
+        <!-- mapping utility versions -->
         <mapstruct.version>1.6.3</mapstruct.version>
 
         <!-- testing dependencies versions-->
@@ -48,8 +48,6 @@
     </properties>
 
     <dependencies>
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -69,13 +67,17 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -135,6 +137,19 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>1.21.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.21.3</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -182,7 +197,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <detail>true</detail>
+                    <reportFormat>plain</reportFormat>
+                    <consoleOutputReporter>
+                        <disable>true</disable>
+                    </consoleOutputReporter>
                     <useFile>false</useFile>
                     <skipTests>${skip.surefire.tests}</skipTests>
                     <argLine>@{argLine}
@@ -207,6 +225,10 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
+                            <reportFormat>plain</reportFormat>
+                            <consoleOutputReporter>
+                                <disable>true</disable>
+                            </consoleOutputReporter>
                             <!-- disable mockito agent warnings for java 21 -->
                             <!-- https://rieckpil.de/how-to-configure-mockito-agent-for-java-21-without-warning/ -->
                             <argLine>@{argLine}

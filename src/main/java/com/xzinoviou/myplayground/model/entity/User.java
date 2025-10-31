@@ -24,13 +24,7 @@ public class User {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(generator = "users_seq", strategy = GenerationType.AUTO)
-    @SequenceGenerator(
-            name = "users_seq",
-            sequenceName = "users_seq",
-            allocationSize = 1,
-            initialValue = 1
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "FIRST_NAME")
@@ -43,11 +37,8 @@ public class User {
     @Column(name = "ROLE")
     private UserRole role;
 
-    @Column(name = "OFFSET_DATE_TIME")
-    private OffsetDateTime offsetDateTime;
-
-    @Column(name = "LOCAL_DATE_TIME")
-    private LocalDateTime localDateTime;
+    @Column(name = "REGISTRATION_DATE")
+    private OffsetDateTime registrationDate;
 
     @Column(name = "TIME_ZONE_OFFSET")
     private String timeZoneOffset;

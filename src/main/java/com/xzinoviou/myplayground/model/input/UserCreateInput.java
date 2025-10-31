@@ -13,5 +13,5 @@ public class UserCreateInput {
     private String firstName;
     private String lastName;
     private String role;
-    private String offsetDateTime;
+    private String registrationDate;
 }

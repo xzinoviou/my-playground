@@ -1,8 +1,0 @@
-insert into my_playground_schema.users (id, first_name, last_name, local_date_time, offset_date_time, role, time_zone_offset) VALUES
-                                                                                                                                  ((VALUES NEXT VALUE FOR my_playground_schema.users_seq),'Darth', 'Vader', '2025-10-31T23:59:59.111222789', '2025-10-31T23:59:59.111222789+03:00', 'admin', '+03:00'),
-       ((VALUES NEXT VALUE FOR my_playground_schema.users_seq),'Luke', 'Skywalker', '2025-10-31T23:59:59.111222789', '2025-10-31T23:59:59.111222789+03:00', 'developer',
-        '+03:00'),
-       ((VALUES NEXT VALUE FOR my_playground_schema.users_seq),'Alpha', 'Centauri', '2025-10-31T23:59:59.111222789', '2025-10-31T23:59:59.111222789+03:00', 'manager',
-        '+03:00'),
-       ((VALUES NEXT VALUE FOR my_playground_schema.users_seq),'Omega', 'Drinko', '2025-10-31T23:59:59.111222789', '2025-10-31T23:59:59.111222789+03:00', 'user', '+03:00'),
-       ((VALUES NEXT VALUE FOR my_playground_schema.users_seq),'JarJar', 'Binks', '2025-10-31T23:59:59.111222789', '2025-10-31T23:59:59.111222789+03:00', 'user', '+03:00');
