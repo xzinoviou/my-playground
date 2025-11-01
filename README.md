@@ -3,16 +3,25 @@
 
 ### A playground project for testing solutions
 
-DB used: ``H2 in-memory``
-DB migration tool used: ``flyway``
+### Branches
 
+- ### h2-db-memory
+  > DB used: ``H2 in-memory``</br>
+  > Database Migration tool used: ``flyway``</br>
+  > Test DB: ``H2 in-memory``</br>
+  > Testing database is pre-populated with data
 
-For the testing:
+- ### myslq-db
+  > DB: ``Mysql 8.0.31``</br>
+  > Database Migration tool used: ``flyway``</br>
+  > Test DB: ``Testcontainers Mysql 8.0.31``</br
+  > Testing database is pre-populated with data
 
-DB used: different ``H2 in-memory`` used.
-DB migration tool used: ``flyway``
-DB is populated with data.
-
+- ### postgres-db
+  > DB: ``Postgres 12.2``</br>
+  > Database Migration tool used: ``flyway``</br>
+  > Test DB: ``Testcontainers Postgres 12.2``</br> 
+  > Testing database is pre-populated with data 
 
 ## How to:
 
