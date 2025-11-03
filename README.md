@@ -115,7 +115,7 @@ mvn spring-boot:run
 
 - ### Tests
 
-By default, the ``maven:package`` phase includes the ``maben:test`` phase.
+By default, the ``maven:package`` phase includes the ``maven:test`` phase.
 If you need to run only the tests, use the command: 
 
 ```terminaloutput
