@@ -6,7 +6,7 @@ pipeline {
         stage("build") {
             steps {
                 echo "[----- Build Start -----]"
-                sh './mvnw clean package -DskipTests=true'
+                sh './mvnw clean package -Dmaven.test.skip'
             }
         }
 
