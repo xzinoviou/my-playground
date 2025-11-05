@@ -49,7 +49,7 @@ class UserServiceImplTest {
         when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
         var result = assertDoesNotThrow(() -> testClass.getAll());
 
-        assertEquals(user.getId(), result.getFirst().getId());
+        assertEquals(user.getId(), result.get(0).getId());
         verify(userRepository).findAll();
 
     }
