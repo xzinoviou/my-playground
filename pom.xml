@@ -182,7 +182,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <detail>true</detail>
+                    <reportFormat>plain</reportFormat>
+                    <consoleOutputReporter>
+                        <disable>true</disable>
+                    </consoleOutputReporter>
                     <useFile>false</useFile>
                     <skipTests>${skip.surefire.tests}</skipTests>
                     <argLine>@{argLine}
@@ -207,6 +210,10 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
+                            <reportFormat>plain</reportFormat>
+                            <consoleOutputReporter>
+                                <disable>true</disable>
+                            </consoleOutputReporter>
                             <!-- disable mockito agent warnings for java 21 -->
                             <!-- https://rieckpil.de/how-to-configure-mockito-agent-for-java-21-without-warning/ -->
                             <argLine>@{argLine}
