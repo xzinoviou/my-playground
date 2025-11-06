@@ -1,6 +1,23 @@
 pipeline {
     agent any
 
+    environment {
+        DB_SCHEMA=credentials('DB_SCHEMA')
+        FLYWAY_USER=credentials('FLYWAY_USER')
+        FLYWAY_PASSWORD=credentials('FLYWAY_PASSWORD')
+        FLYWAY_TEST_USER=credentials('FLYWAY_TEST_USER')
+        FLYWAY_TEST_PASSWORD=credentials('FLYWAY_TEST_PASSWORD')
+        H2_TEST_DB=credentials('H2_TEST_DB')
+        H2_TEST_USER=credentials('H2_TEST_USER')
+        H2_TEST_PASSWORD=credentials('H2_TEST_PASSWORD')
+        MYSQL_DB=credentials('MYSQL_DB')
+        MYSQL_HOST=credentials('MYSQL_HOST')
+        MYSQL_PORT=credentials('MYSQL_PORT')
+        MYSQL_URL=credentials('MYSQL_URL')
+        MYSQL_USER=credentials('MYSQL_USER')
+        MYSQL_PASSWORD=credentials('MYSQL_PASSWORD')
+    }
+
     stages {
 
         stage("build") {
