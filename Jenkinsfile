@@ -22,6 +22,8 @@ pipeline {
 
         stage("build") {
             steps {
+                echo "[----- ENV VARS -----]"
+                sh 'env | sort'
                 echo "[----- Build Start -----]"
                 sh './mvnw clean package -Dmaven.test.skip'
             }
