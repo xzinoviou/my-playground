@@ -34,4 +34,22 @@ pipeline {
                 }
         }
     }
+
+    post {
+       always {
+       echo '[--- Pipeline Terminated : Awaiting for results ---]'
+       }
+       success {
+       echo '[--- Pipeline Termination Results : SUCCESSFUL! ---]'
+       }
+       failure {
+       echo '[--- Pipeline Failing Results : FAILED... ---]'
+       }
+       unstable {
+       echo '[--- Pipeline Failing Results : UNSTABLE... ---]'
+       }
+       changed {
+       echo '[--- Pipeline Termination Results : CHANGED... ---]'
+       }
+    }
 }
