@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author : Xenofon Zinoviou
  */
@@ -23,7 +25,9 @@ class PropertyIT {
     @Test
     void whenRunIntegrationTestsShouldOutputEnvVars() {
         log.info("[----->>>> IS THIS WORKING <<<<-----]");
-        log.info("[-----  Mysql User: " + user + "   -----]");
-        log.info("[-----  Mysql host: " + host + "   -----]");
+        log.info("[-----  Mysql User: {}   -----]", user);
+        log.info("[-----  Mysql host: {}   -----]", host);
+
+        assertEquals("XOXOXO", user);
     }
 }
